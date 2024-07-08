@@ -1,0 +1,1089 @@
+🧵️just a lil reminder, : 
+were gonna modify this code to take in 
+"megabytes or more of corpus data;even tho they 
+should be modules, but dont worry about scalability 
+right now . just get the fx 2 go full thru ❤️‍🩹️🪡️🧵️
+
+🇾🇹️may divide qkv read / write 2 sep files on rewrap🇾🇹️
+🗺️
+
+🗺️
+
+🗓️✳️
+
+✂️
+🔢️
+🦾️
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability : 
+
+
+# import data (from corpus.txt)
+example data format = "
+i drink and i know things
+when you play the game of thrones you win or you die
+the true enemy wont wait out the storm he brings the storm
+"
+
+first loop store each token in two arrays remove all repeating "words" (characters seperated by space or newline) (so there is only 1 instance of each word)
+
+give each remaining "word" u unique number, starting at 1 and counting upwards 
+
+example of index.txt = 
+"
+1 i
+2 drink
+3 and 
+4 know ...
+"
+
+(print output to index.txt)
+✂️
+🦾️
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability : 
+
+
+# import data (from corpus.txt)
+example data format = "
+i drink and i know things
+when you play the game of thrones you win or you die
+the true enemy wont wait out the storm he brings the storm
+"
+
+remove all repeating "words" (characters seperated by space or newline) (so there is only 1 instance of each word)
+(can use two copies of array or better algo if you know one)
+
+give each remaining "word" u unique number, starting at 1 and counting upwards 
+
+example of index.txt = 
+"
+1 i
+2 drink
+3 and 
+4 know ...
+"
+
+(print output to index.txt)
+
+avoid segfaults. we must compile first try!
+
+
+
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️
+next step wussup? (do i need 2 input og index and "query" so it gets index #'s
+or is that just a frivolous step of a halfwit/neerdowell? 
+
+🆕️
+🦾️💌️
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability : 
+
+load index.txt
+example of index.txt = 
+"
+1 i
+2 drink
+3 and 
+4 know ...
+"
+
+load query.txt 
+example of query.txt = 
+"and i know"
+
+"words" = characters seperated by space or newline;
+find each word's match from "query.txt"  in "index.txt" and format it as such for output
+additionally give it a 6 dimensional random word embedding before printing the output
+to "query_index.txt". (if no match is found, simply give word an index of 0 {u should still instatiate random word embeddings however})
+[THERE IS NO DIRECT MAPPING BETWEEN WORDS, WHICH IS WHY IM ASKING YOU TO MAP THEM ]
+
+query_index.txt = 
+"
+3 and [0.0,0.0,0.0,0.0,0.0,0.0 ]
+1 i [0.0,0.0,0.0,0.0,0.0,0.0 ]
+4 know [0.0,0.0,0.0,0.0,0.0,0.0 ] 
+"
+(print output to query_index.txt)
+avoid segfaults. we must compile first try!
+
+🦾️
+
+🦾️
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability : 
+
+load index.txt
+example of index.txt = 
+"
+1 i
+2 drink
+3 and 
+4 know ...
+"
+
+load query.txt 
+example of query.txt = 
+"and i know"
+
+"words" = characters seperated by space or newline;
+find each word's match from "query.txt"  in "index.txt" and format it as such for output
+ (if no match is found, simply give word an index of 0)
+[THERE IS NO DIRECT MAPPING BETWEEN WORDS, WHICH IS WHY IM ASKING YOU TO MAP THEM ]
+
+query_index.txt = 
+"
+3 and
+1 i
+4 know
+"
+(print output to query_index.txt)
+avoid segfaults. we must compile first try!
+
+
+
+
+
+
+additionally give it a 6 dimensional random word embedding before printing the output
+to "query_index.txt".
+
+🦾️
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability ;
+"words" = characters seperated by space or newline;
+give each word a 6 dimensional random word embedding before printing the output
+
+
+load query.txt 
+example of query.txt = 
+"and i know"
+
+query_embeds.txt = 
+and [0.0,0.0,0.0,0.0,0.0,0.0 ]
+i [0.0,0.0,0.0,0.0,0.0,0.0 ]
+know [0.0,0.0,0.0,0.0,0.0,0.0 ] 
+"
+
+(print output to query_embeds.txt)
+avoid segfaults. we must compile first try!
+
+
+
+
+
+
+🚂️
+*got embeds...
+(moving on , if we need "og indexes , [we can go back and get them 💌️<-search match])
+
+
+❓️what is positioning encoding when it uses an even odd even odd scheme for the first word ? 
+
+❓️🅰️
+
+give each word a 6 dimensional positional encoding before printing the output
+🆕️
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability ;
+"words" = tokenized by "space or newline" word = strtok(buffer, " \n");
+
+
+use the following formula : 
+**Traditional Sinusoidal Positional Embedding**
+="
+#include <math.h>
+
+double sinusoidal_positional_embedding(int pos, int dim) {
+    double embedding[DIMENSIONS]; // DIMENSIONS = 6
+
+    for (int i = 0; i < DIMENSIONS; i++) {
+        if ((pos & 1) == 0) { // even position
+            embedding[i] = sin((double) pos / pow(10000.0, (2 * i) / 
+DIMENSIONS));
+        } else { // odd position
+            embedding[i] = cos((double) pos / pow(10000.0, (2 * i + 1) / 
+DIMENSIONS));
+        }
+    }
+
+   
+}
+
+how do i fix this to output 
+"
+example of query.txt = 
+"and i know"
+
+example of positional_encoding.txt = 
+"
+and [0.0,0.0,0.0,0.0,0.0,0.0 ]
+i [0.0,0.0,0.0,0.0,0.0,0.0 ]
+know [0.0,0.0,0.0,0.0,0.0,0.0 ] 
+"
+(with embeddings filled in ofc)
+
+avoid segfaults. we must compile first try!
+
+
+👨🏽‍🏫️we may need 2  give it more details , specifically about 
+"POS"(pos is supposed 2 increment after each)
+
+
+🚂️we already have a pe, we may modify THAT one, at least.
+2 accept ur new format. (if not changing the formula)
+
+🪨️"traditional sinusoidal embeddings"
+🈚️u will/may use this 4 3D ascii positions 2 ;) , etc 🈚️
+🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️
+
+
+👨🏽‍🚀️we might have to "read formula from picture"
+🪨️
+ollama run llama3
+>>> is a rotational positional embedding (ROPE) different than using sine and co
+... sine for positional embedding or am i confused ?
+You're not confused at all!
+
+Rotational Positional Embeddings (ROPE) are indeed a type of positional 
+embedding, but they differ from the traditional approach using sine and 
+cosine functions.
+
+In traditional sinusoidal embeddings, each position is embedded as a 
+vector that encodes its distance from the start of the sequence. The sine 
+and cosine functions are used to create these vectors because they have 
+desirable properties for encoding periodic patterns:
+
+* Sine and cosine functions are continuous and differentiable, making them
+suitable for neural networks.
+* They can capture periodic patterns, such as those found in natural 
+language text (e.g., word order).
+
+In contrast, ROPEs use a rotation-based approach to encode positional 
+information. Instead of using sine and cosine functions, ROPEs rely on 
+learned rotation matrices that are applied to the input sequence. These 
+rotation matrices are designed to capture complex patterns and 
+relationships between positions.
+
+The key differences between ROPEs and traditional sinusoidal embeddings 
+are:
+
+1. **Rotation-based vs. sinusoidal**: ROPEs use learned rotation matrices,
+whereas traditional embeddings use sine and cosine functions.
+2. **Capturing complexity**: ROPEs can model more complex positional 
+relationships than traditional embeddings, which might struggle to capture
+non-trivial patterns.
+3. **Flexibility**: ROPEs allow for more flexibility in the choice of 
+basis functions and can be easily adapted to different sequence lengths.
+
+ROPEs have been shown to outperform traditional sinusoidal embeddings on 
+certain tasks, such as language modeling and machine translation. However,
+the choice between these two approaches ultimately depends on the specific
+problem you're trying to solve and your data's characteristics.
+
+I hope this clears up any confusion!
+➕️
+>>> how should i write this formula , in a more classical way, that computers an
+... d humans will understand. : "traditional sinusoidal embeddings"
+... 
+... formula for PE (pseudo code) = "
+... int r = "range of word count starting @ 0 "
+... int p = "position 0-range"
+... sin(0/10000^(2*p/r))
+... cos(0/10000^(2*p/r))
+
+🅰️
+You're looking to write the traditional sinusoidal positional embedding 
+formula in a more classical, human-readable way.
+
+Here's a suggested rephrasing:
+
+**Traditional Sinusoidal Positional Embedding**
+
+Given an input sequence of length `r` and position `p`, compute the 
+positional embedding as:
+
+1. Calculate the scaled position `x` as: `x = 0 / (10000^(2*p/r))`
+2. Compute the sine component as: `sin_x = sin(x)`
+3. Compute the cosine component as: `cos_x = cos(x)`
+
+This formulation uses a more conventional mathematical notation, making it
+easier for both humans and computers to understand.
+
+Note that I've used the standard mathematical symbols for sine (sin) and 
+cosine (cos), which might be more familiar to mathematicians and 
+programmers
+🅰️that one is wrong and bad
+do you understand this traditional sinusoidal positional embedding  ? is it accurate? and if so
+how should i write this formula  , in a more classical way, that computers and humans will understand? :
+"
+for even position : PE(pos,2i) = sin(pos/10000^2i/d*model)
+
+for odd position : PE(pos,2i+1) = cos(pos/10000^2i/d*model)
+"
+🪨️❣️❣️❣️❣️❣️❣️❣️❣️❣️❣️❣️❣️
+Here's the Traditional Sine-Positional Embedding formula in pure C:
+```c
+#include <math.h>
+
+void sine_pos_embedding(float *embedding, int seq_len, float phase_shift) 
+{
+    for (int i = 0; i < seq_len; i++) {
+        float sin_val = sinf((float)i / phase_shift);
+        embedding[i * 2] = sin_val;
+        embedding[i * 2 + 1] = cosf((float)i / phase_shift);
+    }
+}
+```
+This function takes an array `embedding` of size `seq_len x 2`, the 
+sequence length `seq_len`, and a phase shift value `phase_shift`. It 
+calculates the sine and cosine values for each position in the sequence 
+using the formula: `sin(x)` and `cos(x)`, respectively, where `x = i / 
+phase_shift`.
+
+The function then stores these values in the `embedding` array.
+
+You can use this function to generate positional embeddings for your 
+sequence.
+
+🪨️
+❣️❣️❣️❣️❣️❣️❣️❣️❣️
+#include <math.h>
+
+double sinusoidal_positional_embedding(int pos, int dim) {
+    double embedding[DIMENSIONS]; // DIMENSIONS = 6
+
+    for (int i = 0; i < DIMENSIONS; i++) {
+        if ((pos & 1) == 0) { // even position
+            embedding[i] = sin((double) pos / pow(10000.0, (2 * i) / 
+DIMENSIONS));
+        } else { // odd position
+            embedding[i] = cos((double) pos / pow(10000.0, (2 * i + 1) / 
+DIMENSIONS));
+        }
+    }
+
+    return embedding[0]; // or use the entire array if needed
+}
+
+❣️❣️❣️❣️❣️
+
+
+🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️
+6x4 matmul how? = big deal = 🎖️"dot product" (not regular mult)🎖️
+✳️
+📽️
+https://www.youtube.com/watch?v=Wo5dMEP_BbI&list=PLQVvvaa0QuDcjD5BAw2DxE6OF2tius3V3
+
+<building neural net in python (cool 2 see the reoccuring things (dot.prod/hid-lay/softmax etc)📽️
+🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️🏫️
+
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️
+Step 6.
+
+
+🦾️
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability ; load from  query_embeds.txt and positional_encoding.txt,
+add the values in each file to its matrix match in the other file to produce resultant.txt
+example of query_embeds.txt = 
+"
+0.911099 0.958476 0.619288 0.397170 0.096015 0.946369 
+0.820463 0.489491 0.657118 0.735139 0.632162 0.672363 
+0.525899 0.283038 0.724843 0.373688 0.910110 0.539310 
+0.895177 0.383699 0.420306 0.505557 0.989085 0.155742 
+0.793237 0.225198 0.017396 0.351699 0.493972 0.829214 
+0.367473 0.405070 0.787690 0.986761 0.802241 0.883705 
+
+"
+
+
+example of positional_encoding.txt = 
+"0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+0.540302 0.540302 0.540302 1.000000 1.000000 1.000000 
+0.909297 0.909297 0.909297 0.000200 0.000200 0.000200 
+-0.989992 -0.989992 -0.989992 1.000000 1.000000 1.000000 
+-0.756802 -0.756802 -0.756802 0.000400 0.000400 0.000400 
+0.283662 0.283662 0.283662 1.000000 1.000000 1.000000"
+
+
+
+(using same formatting print output to resultant.txt)
+avoid segfaults. we must compile first try!
+
+This resultant matrix from combining both matrices (Word embedding matrix and positional embedding matrix) will be considered as an input to the encoder part.
+
+
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️
+
+
+
+i added these to matrix's together :
+0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+0.540302 0.540302 0.540302 1.000000 1.000000 1.000000 
+0.909297 0.909297 0.909297 0.000200 0.000200 0.000200 
+-0.989992 -0.989992 -0.989992 1.000000 1.000000 1.000000 
+-0.756802 -0.756802 -0.756802 0.000400 0.000400 0.000400 
+0.283662 0.283662 0.283662 1.000000 1.000000 1.000000 
+ &
+0.911099 0.958476 0.619288 0.397170 0.096015 0.946369 
+0.820463 0.489491 0.657118 0.735139 0.632162 0.672363 
+0.525899 0.283038 0.724843 0.373688 0.910110 0.539310 
+0.895177 0.383699 0.420306 0.505557 0.989085 0.155742 
+0.793237 0.225198 0.017396 0.351699 0.493972 0.829214 
+0.367473 0.405070 0.787690 0.986761 0.802241 0.883705 
+ and got this resultant =
+  0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+1.080604 1.080604 1.080604 2.000000 2.000000 2.000000 
+1.818594 1.818594 1.818594 0.000400 0.000400 0.000400 
+-1.979984 -1.979984 -1.979984 2.000000 2.000000 2.000000 
+-1.513604 -1.513604 -1.513604 0.000800 0.000800 0.000800 
+0.567324 0.567324 0.567324 2.000000 2.000000 2.000000  , is this correct?
+
+
+
+
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️📅️july5(back here again. hoepfully last time tho) 
+Step 6.
+ENCODER
+in GCC C (not c++, NOT python, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability .
+use functional programming, dont clutter main with code when it can have its own function.
+
+
+# generate the weight matrices as "wordcount x four-dimensions"
+random =  The values in the weights matrix are between 0 and 1 randomly(but not 1 or 0)
+W_Q = random
+W_K = random
+W_V = random
+
+
+read values from "resultant.txt" 
+
+
+# generating the queries, keys and values (use dot product multiplication on vectors against weights )
+Q = words * W_Q
+K = words * W_K
+V = words * W_V
+
+(6 words x 6 vectors)
+example data format from "resultant.txt" = "
+0.000000 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0"
+
+
+
+
+write to "qkv.txt" exactly as example is formatted
+HINT : you can just write to snprint() till you need to print
+
+example data format for "qkv.txt" = "
+Queries:
+0.000000 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+Keys:
+0.000000 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+Values:
+0.000000 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+"
+
+
+HINT : you can just write to snprint() till you need to print
+
+write to "qkv.txt"
+avoid segfaults. we must compile first try!
+
+🥇️(i got the code first try [after 100tries{not RETRYS}], but had 2 modify it) 
+
+🏋️the weights are random , ofc it doesn't match the website...
+
+ 0.911099 0.958476 0.619288 0.397170 0.096015 0.946369 
+1.360765 1.029793 1.197420 1.735139 1.632162 1.672363 
+1.435196 1.192335 1.634140 0.373888 0.910310 0.539510 
+-0.094815 -0.606293 -0.569686 1.505557 1.989085 1.155742 
+0.036435 -0.531604 -0.739406 0.352099 0.494372 0.829614 
+0.651135 0.688732 1.071352 1.986761 1.802241 1.883705 
+
+
+
+
+write to "qkv.txt" exactly as example is formatted
+example data format for "qkv.txt" = "
+Queries:
+0.849278 0.564069 1.146597 1.238750 
+0.438115 1.201582 0.370297 0.178546 
+0.856132 0.914932 0.727109 0.931504 
+0.813183 0.842463 1.103911 0.303689
+0.813183 0.842463 1.103911 0.303689
+0.911099 0.958476 0.619288 0.397170
+Keys:
+0.849278 0.564069 1.146597 1.238750 
+0.868330 1.388321 0.198093 0.550122
+0.438115 1.201582 0.370297 0.178546 
+0.438115 1.201582 0.370297 0.178546 
+0.856132 0.914932 0.727109 0.931504 
+0.813183 0.842463 1.103911 0.303689
+Values:
+0.438115 1.201582 0.370297 0.178546 
+0.856132 0.914932 0.727109 0.931504 
+0.813183 0.842463 1.103911 0.303689
+0.849278 0.564069 1.146597 1.238750 
+0.868330 1.388321 0.198093 0.550122
+0.911099 0.958476 0.619288 0.397170
+"
+
+💰️we might be getting 2 greedy with spex like this : *dont assume the number of words, count them first before generating weights. ? but cant hurt 2 sci out👩‍🔬️
+📭️should probably just weight till later. its not that big of a deal 
+esp if we get 2 working code faster <3 👨🏾‍🏫️ if ur counting in wrong its gonna cause mallocs. just chill 4 a sec. *today aint the day (july4 34day nunn)
+👨🏽‍🚀️in fut at least, youd be a bit better off passing and parsing header info : "binary inspired"👨🏽‍🚀️
+📭️s
+🦾️
+📮️
+why are there "zero values? my resultant doesn't even have zeros. are we doing the
+proper math?
+🤔️ :i think the weights arn't just between 1-0 (but also 1|0...nope) 
+fix this but also. can print the weights if problmes persist. 
+
+🤔️ 
+
+🎖️fixed, gonna try 4 head MHA in 1 go.
+✳️its not doing so well here so far (outputs -nan). but it seems 2 do the steps
+so keep pushing
+🩸️i checked, ur WAAAY better off than the pycopy. ur KILLING IT FR FR <3 ❣️
+🧾️
+lets go over the steps to calculate single headed attention given the following input (use pure c if giving programming examples ) : example data format for "qkv.txt" = 
+
+example data format for "qkv.txt" = "
+Queries: 0.849278 0.564069 1.146597 1.238750 0.868330 1.388321 0.198093 0.550122 0.438115 1.201582 0.370297 0.178546 0.856132 0.914932 0.727109 0.931504 
+
+Keys: 0.333396 0.349324 1.581185 0.208034 0.204045 1.501366 0.448067 1.233503 0.834264 0.393145 1.885353 0.372028 0.811083 1.516281 1.453683 0.217985 
+
+Values: 0.210836 0.877294 0.852870 0.434983 0.604553 0.361874 0.194365 0.060892 0.548486 0.771785 0.758592 0.360707 0.813183 0.842463 1.103911 0.303689 
+"
+
+give me the steps all the way up to normalization, right before feed forward. 
+show me what the data should look like when done, format wise. 
+no code. just detaild explanations of the required math please.
+🧾️
+
+🧾️
+>>> ok give me the scaled dot product steps then please. i want to go by the paper
+Here are the steps for calculating single-headed attention with the scaled dot 
+product:
+👨🏽‍⚖️️
+**Step 1: Calculate Query-Key Scaled Dot Product**
+
+* Compute the dot product between each query vector and each key vector, scaled
+by the square root of the key's dimensionality (denoted as `d_k`): 
+`scaled_dot_product = query * key^T / sqrt(d_k)`
+* This will give you a matrix of scaled dot products.
+
+**Step 2: Calculate Attention Weights**
+
+* Compute the attention weights using the softmax function, applied to the 
+scaled dot products: `attention_weights = softmax(scaled_dot_product)`
+* This ensures that the attention weights sum up to 1 and are interpreted as 
+probabilities.
+
+**Step 3: Compute Weighted Sum of Values**
+
+* Compute the weighted sum of values using the attention weights and value 
+vectors: `output = attention_weights * values`
+* This will give you a new vector representing the output of the attention 
+mechanism.
+
+**Data Format after Step 3:** (same as before)
+`Queries: ...`
+`Keys: ...`
+`Values: ...`
+`Output: ...`
+
+Note that these steps match the original paper's formula for scaled dot product
+attention. Let me know if you have any further questions!
+
+*****************
+
+
+[🔥️this is actually a really good prompt. , we may should add more steps, if
+there is anormalizer cuz i keep gettings "some nans"]
+[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️[🔥️
+🏁️
+code this in PURE GCC C 
+readability rules [ NEVER use structs, NEVER use nested loops, avoid segfaults]
+
+
+
+example data format for "encodings.txt" = "
+0.000000 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.1
+
+0.000000 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.1
+
+0.000000 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.1
+"
+
+
+example data format for "shatt.txt" = 
+0.000000 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.1
+"
+🪜️
+*Step 0:
+read q k v matrix values from encodings.txt into 3 arrays
+print q k & v values to cli as a checkpoint.
+(reminder: q k & v are all 6x4 matrix's)
+read the values from the file in a disciplined, controlled manner, using separate loops to read each matrix separately.This will avoid improper reading.
+
+
+📅️
+
+*1rst Step: transpose key(k) matrix from 6x4 to 4x6
+& print transposed key to cli as a checkpoint.
+
+*2nd Step: Calculate Query-Key Scaled Dot Product 
+& print result to cli as a checkpoint.
+*3rd Step: Calculate Attention Weights
+& print result to cli as a checkpoint.
+*4th Step: Compute Weighted Sum of Values
+& print result to cli as a checkpoint.
+& write values to shatt.txt
+🪜️
+
+(warning: never do THIS : printf("%f ", q[i][j] * k[i][j]);it doesn't compile
+
+solution : just print result from where it was stored!)
+
+do you want to do this all in one go , or step by step? 
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+⚠️i dont think these are necessarily even
+the right "STEPS" , but
+at least were pulling in the values now...)
+🍍️pin 🔍️ "physics informed NN"]jul6📅️
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+🪜️
+*1rst Step: read q k v values from encodings.txt into 3 arrays
+print q k & v values
+*2nd Step: transpose key matrix from 6x4 to 4x6
+& print transposed key to cli
+
+*3rd Step: Calculate Query-Key Scaled Dot Product 
+& print result to cli
+
+*4th Step: Calculate Attention Weights
+& print result to cli
+*5th Step: Compute Weighted Sum of Values
+*6th Step: write values to shatt.txt
+🪜️
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+⭐️
+👨🏾‍🚒️if u cant get this going , u can probably just change the #'s on the old one till holein1⛳️👨🏾‍🚒️
+(dont assume dimension size, it could be any size . count the values ) .
+(every value is seperated by a space, each array by newline)
+
+⚖️
+*these steps may not be just as on the paper. we can address this a number of weighs.👨🏽‍⚖️️
+👨🏽‍⚖️️(use these tags+www.webpage 2 create "sensible arch")
+📅️jul4]📌️
+🔦️u should probably go step by step thru attn head(lots of steps!) even tho its a pain in the ass
+cuz the matrix formats keep changing (6x4 <> 4x6 <> 6x6 {x3? does this afew times!}) so yea.
+
+🌩️ if YOU KNOW the steps. then u can redo w/e u want. but YOU DONT🌩️ 
+📬️'july6>>>👩🏻‍🏫️take pics turn into text/#'s 📸️
+(and ask it how it got those results specifically 
+before trying 2 craft query)
+📅️
+id do itnow but their trying 2 make me not do it
+2 waste my time so im just gonna go 2 bed (2:21 sat)
+
+🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️🔦️
+reminder :code these steps in PURE GCC C (dont use structs . use functional programming)
+(each step should be in its own function)
+include #includes (string,ctype etc)
+
+⚖️
+
+**Step 1: Calculate Query-Key Scaled Dot Product ⚧️(transpose key to be 4x6)**
+* Compute the dot product between each query vector and each key vector, scaled
+by the square root of the key's dimensionality (denoted as `d_k`): 
+`scaled_dot_product = query * key^T / sqrt(d_k)`
+* This will give you a matrix of scaled dot products.
+
+
+🖨️🪞️ print ANYTHING "tutorial" gives u values for! {def this} 🪞️🖨️
+
+**Step 2: Calculate Attention Weights**
+The optional step of masking is optional, and we won’t be calculating it.
+So now we will be applying the softmax operation on our scaled resultant matrix.
+
+* Compute the attention weights using the softmax function, applied to the 
+scaled dot products: `attention_weights = softmax(scaled_dot_product)`
+* This ensures that the attention weights sum up to 1 and are interpreted as 
+probabilities.
+
+🔦️
+
+**Step 3: Compute Weighted Sum of Values**
+Doing the final multiplication step to obtain the resultant matrix from single-head attention.
+Step 4: write values to shatt.txt
+
+
+
+[🔥️[🔥️[🔥️[🔥️[🔥️[go step by step{its ok. lets learn outputs & peice 2gether full query} (no fx) just keep adding...🏋️chill out, git gud. its/were all matrix's 4AVA...🏋️
+
+we need to impliment the functionality for this stage of encoder-decoder transformer.
+reminder :code these steps in PURE GCC C (not C++);dont use structs for readability. 
+keep it simple so a child can understand.
+
+
+Step 0: read query key value from file and store in arrays :
+reminder : q k and v are 6x4 matrices stored in shatt.txt in the order of "q,k,v"
+
+example data values to demonstrate format "shatt.txt" = 
+""
+
+
+print 6x4  qkv arrays for verification
+
+Step 1: Transpose key array from 6x4 to 4x6 
+
+print new 4x6 key array for verification
+
+Step 2: Calculate Query-Key Scaled Dot Product :
+
+* Compute the dot product between each query vector and each key vector
+and give the result as a 6x6 matrix. 
+print new 6x6 matrix row by row for verification
+
+
+
+
+
+
+
+🔥️[🔥️[🔥️[🔥️[🔥️
+🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️
+**Step 3: Calculate Attention Weights**
+The optional step of masking is optional, and we won’t be calculating it.
+So now we will be applying the softmax operation on our scaled resultant matrix.
+
+* Compute the attention weights using the softmax function, applied to the 
+scaled dot products: `attention_weights = softmax(scaled_dot_product)`
+* This ensures that the attention weights sum up to 1 and are interpreted as 
+probabilities.
+
+**Step 5 Compute Weighted Sum of Values**
+Doing the final multiplication step to obtain the resultant matrix from single-head attention.
+Step 5: write values to shatt.txt
+
+🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️🎁️
+🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️
+we need to impliment the functionality for this stage of encoder-decoder transformer.
+reminder :code these steps in PURE GCC C (not C++);dont use structs for readability. 
+
+
+
+**Step 0: read q k v from file **
+read from shatt.txt and write result to transpose.txt
+
+**Step 1: Calculate Query-Key Scaled Dot Product ⚧️(transpose key to be 4x6)**
+matrix multiplication between Query and Key
+* Compute the dot product between each query vector and each key vector, scaled
+by the square root of the key's dimensionality (denoted as `d_k`): 
+`scaled_dot_product = query * key^T / sqrt(d_k)`
+* This will give you a matrix of scaled dot products.
+
+
+
+**Step 2: Calculate Attention Weights**
+The optional step of masking is optional, and we won’t be calculating it.
+So now we will be applying the softmax operation on our scaled resultant matrix.
+
+* Compute the attention weights using the softmax function, applied to the 
+scaled dot products: `attention_weights = softmax(scaled_dot_product)`
+* This ensures that the attention weights sum up to 1 and are interpreted as 
+probabilities.
+
+**Step 3: Compute Weighted Sum of Values**
+Doing the final multiplication step to obtain the resultant matrix from single-head attention.
+Step 4: write values to shatt.txt
+
+
+example data format (q=6x4, k=6x4,v=6x4)for "shatt.txt" = 
+"
+0.198393 0.313330 0.140739 0.219119 
+0.356600 0.853542 0.249182 0.036334 
+0.661985 0.290388 0.361366 0.259703 
+0.278804 0.844395 0.295073 1.038797 
+0.837864 0.830372 1.196458 0.720855 
+1.331587 0.282026 0.537465 1.126855 
+1.405829 0.306921 0.933354 0.111320 
+0.462641 0.119282 0.519317 0.241044 
+0.196604 0.145168 0.838553 0.150926 
+-0.056956 -0.111694 -0.477457 1.229534 
+-0.082674 -0.256860 -0.358073 0.675257 
+-0.076424 -0.544158 -0.292389 0.481169 
+0.003298 -0.286738 -0.139611 0.114715 
+0.025320 -0.156087 -0.201971 0.186811 
+0.011615 -0.390323 -0.041844 0.055150 
+0.291417 0.661665 0.390365 0.338548 
+0.066236 0.275122 0.000178 0.366339 
+0.308914 0.082042 1.061791 0.823976 
+"
+
+(result of softmax of q and k matrix multiplied by v
+example 6x4 data format for "transpose.txt" = 
+0.003298 -0.286738 -0.139611 0.114715 
+0.025320 -0.156087 -0.201971 0.186811 
+0.011615 -0.390323 -0.041844 0.055150 
+0.291417 0.661665 0.390365 0.338548 
+0.066236 0.275122 0.000178 0.366339 
+0.308914 0.082042 1.061791 0.823976 
+0.066236 0.275122 0.000178 0.366339 
+"
+
+avoid errors and segfaults, compile first try PLEASE (IN GNU GCC C) !
+
+📝️
+📬️it sux and doing the 3 steps. i have  2hand hold it w/e should be ez. 🐛️
+🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️🔬️
+
+🧾️
+>>> ok , what are the steps afterwards? going all the way to predicting output probab
+... ilities ? 
+After calculating the attention weights and weighted sum of values, you can 
+proceed with the following steps:
+
+**Step 4: Compute the Contextualized Representation**
+
+* Concatenate the query vector with the weighted sum of values (output) from 
+Step 3: `contextualized_representation  = concat(query, output)`
+* This creates a new representation that combines information from the original
+query and the attended values.
+
+**Step 5: Feed-Forward Network (FFN)**
+
+* Apply an FFN to the contextualized representation: `ffn_output  = 
+ReLU(FFN(contextualized_representation))`
+* The FFN typically consists of multiple layers of linear transformations 
+followed by activation functions (e.g., ReLU).
+
+**Step 6: Output Calculation**
+
+* Compute the output probabilities using the FFN output from Step 5 and a 
+learned output layer (softmax): `output_probabilities  = 
+softmax(output_layer(ffn_output))`
+* This produces the final output probabilities.
+
+**Data Format after Step 6:** (same as before, with an added "Output" section)
+`Queries:  ...`
+`Keys:  ...`
+`Values:  ...`
+`Output:  ...`
+
+Note that these steps are typical for a single-headed attention mechanism. The 
+exact architecture and hyperparameters may vary depending on the specific use 
+case and task.
+
+🧾️
+🎖️
+
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️
+Step 7.
+Single head attention
+in GCC C (not c++, pure c), we need to impliment the functionality for this stage of encoder-decoder transformer. Avoid structs, use standalone variables, for readability ; load from  qkv.txt and write to shatt.txt,
+
+Here are the steps for calculating single-headed attention with the scaled dot 
+product:
+
+**Step 1: Calculate Query-Key Scaled Dot Product**
+
+* Compute the dot product between each query vector and each key vector, scaled
+by the square root of the key's dimensionality (denoted as `d_k`): 
+`scaled_dot_product = query * key^T / sqrt(d_k)`
+* This will give you a matrix of scaled dot products.
+
+**Step 2: Calculate Attention Weights**
+
+* Compute the attention weights using the softmax function, applied to the 
+scaled dot products: `attention_weights = softmax(scaled_dot_product)`
+* This ensures that the attention weights sum up to 1 and are interpreted as 
+probabilities.
+
+**Step 3: Compute Weighted Sum of Values**
+
+* Compute the weighted sum of values using the attention weights and value 
+vectors: `output = attention_weights * values`
+* This will give you a new vector representing the output of the attention 
+mechanism.
+
+
+
+example data format for "qkv.txt" = "
+Queries: 0.849278 0.564069 1.146597 1.238750 0.868330 1.388321 0.198093 0.550122 0.438115 1.201582 0.370297 0.178546 0.856132 0.914932 0.727109 0.931504 
+Keys: 0.333396 0.349324 1.581185 0.208034 0.204045 1.501366 0.448067 1.233503 0.834264 0.393145 1.885353 0.372028 0.811083 1.516281 1.453683 0.217985 
+Values: 0.210836 0.877294 0.852870 0.434983 0.604553 0.361874 0.194365 0.060892 0.548486 0.771785 0.758592 0.360707 0.813183 0.842463 1.103911 0.303689 
+"
+
+
+
+write output to "shatt.txt"
+
+avoid segfaults and double free's. we must compile first try!
+
+----
+✉️✉️✉️✉️✉️✉️✉️✉️
+
+
+❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️
+
+[Query 6x4]
+3.88 3.8 4.08 3.42
+2.55 1.86 2.77 1.78
+3.39 3.6 3.49 2.72
+1.02 1.18 1.24 1.3
+1.9 1.56 1.88 1.53
+3.04 2.9 2.73 2.22 
+[Transposed (Key) 4x6]
+3.71  2.18  3.28  1.07  1.49  2.51
+4.04  2.51  3.11  1.13  1.97  3.04
+4.15  1.64  3.65  1.64  2.14  3.45
+3.41  1.93  3.01  1.35  1.81  2.28  
+
+"result.txt"
+6x6
+
+58.341 31.2882 49.7306 19.7538 28.1886 43.1644
+34.5402 18.2058 29.6169 11.7761 16.6133 25.6698
+50.8796 27.3994 43.2409 17.0909 24.5349 37.695
+18.1304 9.728 15.4544 6.2134 8.851 13.3894
+26.3707 14.0937 22.5509 8.9445 12.6967 19.4858
+41.8941 22.668 35.6369 14.004 20.103 30.9265
+
+❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️❓️
+
+
+🎖️finished shat:🎖️
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️
+code this in PURE GCC C 
+readability rules : [ NEVER use structs, NEVER use nested loops, avoid segfaults];
+
+time to combine "shatt+.txt" with "resultant.txt"
+
+to form double shatt_mbed[6][6]; 
+
+then normalize .
+To normalize the above matrix (shatt_mbed), we need to compute the mean and standard deviation row-wise for each row.
+we subtract each value of the matrix by the corresponding row mean and divide it by the corresponding standard deviation.
+
+write the finished 6x6 matrix to "shatt_mbed.txt"
+
+example data format for all ".txt" files = 
+"0.000000 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.1"
+
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️]DONE
+🆕️🆕️🆕️🆕️🆕️🆕️🆕️🆕️]july7
+code this in PURE GCC C 
+readability rules : [ NEVER use structs, NEVER use nested loops, avoid segfaults];
+
+read shatt_mbed[6][6] from "shatt_mbed.txt"
+
+
+
+create 6x6 weights[6][6] (rand between .01 & .99) and write to "weights.txt"
+
+multiply shatt_mbed * weights and store result in shatt_emb_train_0[6][6]
+and print result as a checkpoint 
+
+then create 1x6 bias[1][6] (rand between .01 & .99) and write to "bias.txt"
+then multiply shatt_emb_train_0[6][6] and bias[1][6]
+and store result in shatt_emb_train_1[6][6]
+print result as a checkpoint and write result to file "shatt_emb_train.txt"
+
+
+example data format for all ".txt" files = 
+"0.000000 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.1"
+🆕️🆕️🆕️🆕️🆕️🆕️]DONE (that was linear layer btw) sep relu cuz w&b.txt
+🆕️🆕️🆕️
+8.RELU
+
+code this in PURE GCC C 
+readability rules : [ NEVER use structs, NEVER use nested loops, avoid segfaults];
+
+1.
+read linlay[6][6] from "linlay.txt"
+apply RELU , store in  relu[6][6]
+and print result as a checkpoint ;
+
+2.
+read shatt_mbed[6][6] from "shatt_mbed.txt"
+add relu + shatt_mbed as encOut[6][6]
+3.
+and print result as a checkpoint ;
+then normalizing encout using the row wise mean and standard deviation.
+and print result as a checkpoint ;
+write result to encOut.txt
+
+example data format for all ".txt" files = 
+"0.000000 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.1"
+
+🛌️shatt_mbed.txt = 1.51🛌️
+🆕️🆕️🆕️
+
+
+❗️
+"shatt_mbed.txt" < we WILL use this file again in another ADD(phew)
+(later we can roll decoder only but chill pls)❗️
+🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️
+
+RNN next word prediction
+in GCC C (not c++, pure c), we need to impliment the functionality for this. Avoid structs, use standalone variables, for readability ; 
+
+Show minimum verifiable functionality using whatever data is appropriate.
+
+write to `weights.txt`, reads from `weights.txt` at
+the next epoch, and writes to it again with updates.
+
+🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️🗑️
